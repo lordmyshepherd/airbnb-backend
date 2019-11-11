@@ -17,7 +17,9 @@ Including another URLconf
 from django.conf import settings # new
 from django.urls import path, include # new
 from django.conf.urls.static import static # new
+
 urlpatterns = [
+    path('users', include('users.urls')),
 ]
 
 if settings.DEBUG: # new
