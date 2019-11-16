@@ -5,22 +5,16 @@ import requests
 
 from django.http        import JsonResponse
 from django.views       import View
-from .models            import Users, SocialPlatform
 from weandb.settings    import SECRET_KEY
+
+from .models            import Users, SocialPlatform
 
 class SignUpView(View) :
     def post(self, request) :
         credential      = json.loads(request.body)
         hashed_password = bcrypt.hashpw(credential["password"].encode('utf-8'), bcrypt.gensalt())
-        Users(
-            email       = credential["email"],
-            password    = hashed_password.decode("utf-8")
-        ).save()
-
-        return JsonResponse({"MESSAGE":"SUCCESS"}, status=200)
 
         if not Users.objects.filter(email = credential["email"]).exists() :
-            hashed_password = bcrypt.hashpw(credential["password"].encode('utf-8'), bcrypt.gensalt())
             Users(
                 first_name  = credential["first_name"],
                 last_name   = credential["last_name"],
@@ -74,6 +68,7 @@ class KakaoSignInView(View) :
                 first_name          = kakao_user_info['properties']['nickname'],
                 email               = kakao_user_info['kakao_account']['email']
             ).save()
+
             user                    = Users.objects.get(social_id=kakao_user_info['id'])
             payload                 = {"user_id" : user.id}
             encryption_secret       = SECRET_KEY
@@ -81,14 +76,3 @@ class KakaoSignInView(View) :
             encoded_access_token    = jwt.encode(payload, encryption_secret, algorithm=algorithm)
 
             return JsonResponse({'access_token': encoded_access_token.decode('utf-8')}, status=200)
-
-class GoogleLoginView(View):
-    
-    def get(self,request) : 
-        token    = request.headers["Authorization"]
-        url      = 'https://oauth2.googleapis.com/tokeninfo?id_token='
-        response = requests.get(url+token)
-        user     = response.json()
-
-        return JsonResponse({"message" : "success"}, status=200)
-

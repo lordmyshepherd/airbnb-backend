@@ -36,8 +36,7 @@ class UserSignInTest(unittest.TestCase) :
 
         user_info       = {'email' : 'ufc@gmail.com', 'password' : 'hello123'}
         response        = c.post('/account/signin', json.dumps(user_info), content_type='applications/json')
-        self.assertEqual(response.status_code, 200)\
-        
+        self.assertEqual(response.status_code, 200)
 
     @patch('account.views.requests')
     def test_kakao_sign_in(self, mocked_requests) :

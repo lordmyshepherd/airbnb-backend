@@ -32,6 +32,11 @@ class RefundPolicies(models.Model):
 
     class Meta:
         db_table = 'refund_policies'
+class Cities(models.Model):
+    city = models.CharField(max_length = 200)
+
+    class Meta:
+        db_table = 'cities'
 
 class Rooms(models.Model):
     title =             models.CharField(max_length = 200)
@@ -48,6 +53,7 @@ class Rooms(models.Model):
     lng =               models.DecimalField(max_digits=9, decimal_places = 6, null = True)
     fee =               models.DecimalField(max_digits = 20, decimal_places = 2, null = True)
     cleaning_fee =      models.DecimalField(max_digits = 20, decimal_places = 2, null = True)
+    city =              models.ForeignKey(Cities, on_delete = models.CASCADE, null = True)
     created_at =        models.DateTimeField(auto_now_add = True)
     updated_at =        models.DateTimeField(auto_now = True)
 
