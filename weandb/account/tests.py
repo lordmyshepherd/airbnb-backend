@@ -26,14 +26,18 @@ class UserSignInTest(unittest.TestCase) :
 
     def tearDown(self) :
         Users.objects.get(email='ufc@gmail.com').delete()
-        Users.objects.get(social_id=11).delete()
+        try :
+            Users.objects.get(social_id=11).delete()
+        except :
+            pass
 
     def test_email_sign_in(self):
         c = Client()
 
         user_info       = {'email' : 'ufc@gmail.com', 'password' : 'hello123'}
         response        = c.post('/account/signin', json.dumps(user_info), content_type='applications/json')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)\
+        
 
     @patch('account.views.requests')
     def test_kakao_sign_in(self, mocked_requests) :
@@ -49,7 +53,7 @@ class UserSignInTest(unittest.TestCase) :
 
         mocked_requests.get = MagicMock(return_value = FakeResponse())
         header = {'HTTP_Authorization' : '1234ABCD'}
-        response = c.get('/account/kakao', content_type='applications/json', **header)
+        response = c.get('/account/kakao_signin', content_type='applications/json', **header)
         self.assertEqual(response.status_code, 200)
 
 if __name__ == '__main__':

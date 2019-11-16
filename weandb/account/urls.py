@@ -1,8 +1,9 @@
 from django.urls    import path
-from .views         import SignUpView, SignInView, KakaoSignInView
+from .views         import SignUpView, SignInView, KakaoSignInView, GoogleLoginView
 
 urlpatterns = [
     path('/signup', SignUpView.as_view()),
     path('/signin', SignInView.as_view()),
-    path('/kakao', KakaoSignInView.as_view()),
+    path('/kakao_signin', KakaoSignInView.as_view()),
+    path('/google_signin', GoogleLoginView.as_view())
 ]

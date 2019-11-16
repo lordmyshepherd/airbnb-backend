@@ -79,4 +79,16 @@ class KakaoSignInView(View) :
             encryption_secret       = SECRET_KEY
             algorithm               = "HS256"
             encoded_access_token    = jwt.encode(payload, encryption_secret, algorithm=algorithm)
+
             return JsonResponse({'access_token': encoded_access_token.decode('utf-8')}, status=200)
+
+class GoogleLoginView(View):
+    
+    def get(self,request) : 
+        token    = request.headers["Authorization"]
+        url      = 'https://oauth2.googleapis.com/tokeninfo?id_token='
+        response = requests.get(url+token)
+        user     = response.json()
+
+        return JsonResponse({"message" : "success"}, status=200)
+
