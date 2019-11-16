@@ -1,15 +1,14 @@
 import json
 import boto3
 
+from weandb.settings    import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+
 from django.http        import JsonResponse, HttpResponse
 from django.views       import View
 from django.db          import transaction
 
-from weandb.settings    import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-
 from account.utils      import login_required
 from account.models     import Users, Languages, HostInfos, HostInfosLanguages
-
 from rooms.models       import RoomTypes, Amenities, Beds, RefundPolicies, Rules, Rooms, RoomsAmenities, RoomsRules, RoomsBeds, Pictures
 
 class LanguageView(View) :
@@ -51,7 +50,6 @@ class HostInfoView(View) :
                 intro       = data["intro"],
                 interaction = data["interaction"],
                 country     = data["country"],
-                city        = data["city"]
             )
         else :
            HostInfos(
@@ -59,7 +57,6 @@ class HostInfoView(View) :
                 intro       = data["intro"],
                 interaction = data["interaction"],
                 country     = data["country"],
-                city        = data["city"],
                 user_id     = request.user.id
             ).save()
 
@@ -95,7 +92,6 @@ class HostImageView(View) :
     @login_required
     def post(self, request):
         file = request.FILES["host_image"]
-
         try :
             host_info   = HostInfos.objects.get(user_id = request.user.id)
             image       = self.s3_upload(file)

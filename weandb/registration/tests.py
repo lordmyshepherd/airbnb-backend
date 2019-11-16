@@ -30,13 +30,13 @@ class HostRegistrationTest(unittest.TestCase) :
         hashed_password = bcrypt.hashpw(byted_password, bcrypt.gensalt())
 
         Users(
-            first_name  = 'sunghun',
-            last_name   = 'choo',
-            email       = 'ufc@gmail.com',
-            password    = hashed_password.decode('utf-8'),
-            birth_year  = 1811,
-            birth_month = 4,
-            birth_day   = 10
+            first_name      = 'sunghun',
+            last_name       = 'choo',
+            email           = 'ufc@gmail.com',
+            password        = hashed_password.decode('utf-8'),
+            birth_year_id   = 12,
+            birth_month_id  = 4,
+            birth_day_id    = 10
         ).save()
 
     def tearDown(self) :

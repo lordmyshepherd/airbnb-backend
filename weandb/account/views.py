@@ -7,7 +7,19 @@ from django.http        import JsonResponse
 from django.views       import View
 from weandb.settings    import SECRET_KEY
 
-from .models            import Users, SocialPlatform
+from .models            import Users, SocialPlatform, Years, Months, Days
+
+class YearView(View) :
+    def get(self, request) :
+        return JsonResponse({"year_list" : list(Years.objects.values())}, status = 200)
+
+class MonthView(View) :
+    def get(self, request) :
+        return JsonResponse({"month_list" : list(Months.objects.values())}, status = 200)
+
+class DayView(View) :
+    def get(self, request) :
+        return JsonResponse({"day_list" : list(Days.objects.values())}, status = 200)
 
 class SignUpView(View) :
     def post(self, request) :
@@ -16,13 +28,13 @@ class SignUpView(View) :
 
         if not Users.objects.filter(email = credential["email"]).exists() :
             Users(
-                first_name  = credential["first_name"],
-                last_name   = credential["last_name"],
-                email       = credential["email"],
-                password    = hashed_password.decode("utf-8"),
-                birth_year  = credential["birth_year"],
-                birth_month = credential["birth_month"],
-                birth_day   = credential["birth_day"]
+                first_name      = credential["first_name"],
+                last_name       = credential["last_name"],
+                email           = credential["email"],
+                password        = hashed_password.decode("utf-8"),
+                birth_year_id   = credential["birth_year"][0]["id"],
+                birth_month_id  = credential["birth_month"][0]["id"],
+                birth_day_id    = credential["birth_day"][0]["id"]
             ).save()
             return JsonResponse({"message":"SUCCESS"}, status=200)
         else :
