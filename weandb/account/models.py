@@ -36,7 +36,6 @@ class HostInfos(models.Model) :
     nickname        = models.CharField(max_length = 100, null = True)
     intro           = models.TextField(null = True)
     interaction     = models.CharField(max_length = 1000, null = True)
-    language        = models.CharField(max_length = 100, null = True)
     country         = models.CharField(max_length = 100, null = True)
     city            = models.CharField(max_length = 100, null = True)
 
