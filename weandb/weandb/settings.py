@@ -22,14 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'n%6s4)l4xv5zw%pd=h_x&h+-#dv)0u71twp)aszr^30(yey1ef'
-SECRET_KEY = my_settings.weandb_SECRET['secret']
-EXP_TIME = my_settings.weandb_SECRET['exp_time']
+
+SECRET_KEY              = my_settings.weandb_SECRET['secret']
+EXP_TIME                = my_settings.weandb_SECRET['exp_time']
+AWS_ACCESS_KEY_ID       = my_settings.weandb_SECRET['aws_access_key_id']
+AWS_SECRET_ACCESS_KEY   = my_settings.weandb_SECRET['aws_secret_access_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'account',
     'rooms',
+    'registration'
 ]
 
 MIDDLEWARE = [
