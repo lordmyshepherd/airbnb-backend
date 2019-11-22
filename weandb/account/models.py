@@ -6,16 +6,37 @@ class SocialPlatform(models.Model) :
     class Meta :
         db_table = 'social_platform'
 
+class Years(models.Model) :
+    year = models.IntegerField()
+
+    class Meta :
+        db_table = 'years'
+
+class Months(models.Model) :
+    month = models.IntegerField()
+
+    class Meta :
+        db_table = 'months'
+
+class Days(models.Model) :
+    day = models.IntegerField()
+
+    class Meta :
+        db_table = 'days'
+
 class Users(models.Model) :
-    social_platform = models.ForeignKey(SocialPlatform, on_delete=models.CASCADE, null = True)
+    social_platform = models.ForeignKey(SocialPlatform, on_delete = models.CASCADE, null = True)
     social_id       = models.IntegerField(null = True)
     first_name      = models.CharField(max_length = 100, null = True)
     last_name       = models.CharField(max_length = 100, null = True)
     email           = models.CharField(max_length = 100, null = True)
     password        = models.CharField(max_length = 100, null = True)
-    birth_year      = models.IntegerField(null = True)
-    birth_month     = models.IntegerField(null = True)
-    birth_day       = models.IntegerField(null = True)
+#    birth_year      = models.IntegerField(null = True)
+#    birth_month     = models.IntegerField(null = True)
+#    birth_day       = models.IntegerField(null = True)
+    birth_year      = models.ForeignKey(Years,  on_delete = models.CASCADE, null = True)
+    birth_month     = models.ForeignKey(Months, on_delete = models.CASCADE, null = True)
+    birth_day       = models.ForeignKey(Days,   on_delete = models.CASCADE, null = True)
     is_host         = models.BooleanField(default = False)
     created_at      = models.DateTimeField(auto_now_add = True)
     updated_at      = models.DateTimeField(auto_now = True)
