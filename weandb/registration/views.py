@@ -49,14 +49,14 @@ class HostInfoView(View) :
                 nickname    = data["nickname"],
                 intro       = data["intro"],
                 interaction = data["interaction"],
-                country     = data["country"],
+                #country     = data["country"],
             )
         else :
            HostInfos(
                 nickname    = data["nickname"],
                 intro       = data["intro"],
                 interaction = data["interaction"],
-                country     = data["country"],
+                #country     = data["country"],
                 user_id     = request.user.id
             ).save()
 
@@ -124,7 +124,8 @@ class RoomInfoView(View) :
                 cleaning_fee        = data["cleaning_fee"],
                 fee                 = data["fee"],
                 lat                 = data["lat"],
-                lng                 = data["lng"]
+                lng                 = data["lng"],
+                city_id             = data["city"]
             )
             room.save()
 
